@@ -9,8 +9,10 @@ export default {
       areas: data.areas,
     };
 
+    const token = context.rootGetters.token;
+
     const response = await fetch(
-      `https://findacoach-ac38d-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+      `https://findacoach-ac38d-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json?auth=${token}`,
       {
         method: 'PUT',
         body: JSON.stringify(coachData),
@@ -27,7 +29,7 @@ export default {
   },
   async loadCoaches(context, payload) {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {
-      return
+      return;
     }
 
     const response = await fetch(
