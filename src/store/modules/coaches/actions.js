@@ -1,3 +1,5 @@
+import { api } from '../../../../api';
+
 export default {
   async registerCoach(context, data) {
     const userId = context.rootGetters.userId;
@@ -12,7 +14,7 @@ export default {
     const token = context.rootGetters.token;
 
     const response = await fetch(
-      `https://findacoach-ac38d-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json?auth=${token}`,
+      `${api.registerCoachPath(userId, token)}`,
       {
         method: 'PUT',
         body: JSON.stringify(coachData),
@@ -33,7 +35,7 @@ export default {
     }
 
     const response = await fetch(
-      `https://findacoach-ac38d-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
+      `${api.loadCoachesPath}`
     );
     const responseData = await response.json();
 

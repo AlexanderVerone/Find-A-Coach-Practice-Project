@@ -1,3 +1,5 @@
+import { api } from '../../../../api';
+
 export default {
   async contactCoach(context, payload) {
     const newRequest = {
@@ -5,7 +7,7 @@ export default {
       message: payload.message,
     };
     const response = await fetch(
-      `https://findacoach-ac38d-default-rtdb.europe-west1.firebasedatabase.app/requests/${payload.coachId}.json`,
+      `${api.contactCoachPath(payload.coachId)}`,
       {
         method: 'POST',
         body: JSON.stringify(newRequest),
@@ -28,7 +30,7 @@ export default {
     const coachId = context.rootGetters.userId;
     const token = context.rootGetters.token;
     const response = await fetch(
-      `https://findacoach-ac38d-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json?auth=${token}`
+      `${api.fetchCoachesRequestsPath(coachId, token)}`
     );
     const responseData = await response.json();
     if (!response.ok) {
